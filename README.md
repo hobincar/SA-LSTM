@@ -1,4 +1,4 @@
-# describing-videos-by-exploiting-temporal-structure
+# SA-LSTM
 
 This project tries to implement *SA-LSTM* proposed by **[Describing Videos by Exploiting Temporal Structure](https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Yao_Describing_Videos_by_ICCV_2015_paper.pdf)**[1], *ICCV 2015*.
 
