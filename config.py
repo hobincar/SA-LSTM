@@ -119,14 +119,14 @@ class TrainConfig:
     optimizer = "AMSGrad"
     gradient_clip = 5.0 # None if not used
     lr = {
-        'MSVD': 6e-6,
+        'MSVD': 5e-5,
         'MSR-VTT': 2e-4,
     }[corpus]
-    lr_decay_start_from = 0
+    lr_decay_start_from = 20
     lr_decay_gamma = 0.9
     lr_decay_patience = 5
     weight_decay = 1e-5
-    reg_lambda = 1e-5
+    reg_lambda = 1e-3
 
     """ Pretrained Model """
     pretrained_decoder_fpath = None
