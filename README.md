@@ -53,7 +53,7 @@ Clone evaluation codes from [the official coco-evaluation repo](https://github.c
 
 Run
    ```
-   (.env) $ CUDA_VISIBLE_DEVICES=0 python train.py
+   (.env) $ python train.py
    ```
 
 You can change some hyperparameters by modifying `config.py`.
@@ -64,13 +64,13 @@ You can change some hyperparameters by modifying `config.py`.
 1. Set the checkpoint path by changing the value of a property named `ckpt_fpath` of `EvalConfig` in `config.py`.
 2. Run
    ```
-   (.env) $ CUDA_VISIBLE_DEVICES=0 python run.py
+   (.env) $ python run.py
    ```
 
 
 # Performances
 
-I select a checkpoint which achieves the best CIDEr score on the validation set, and report the test scores of it. It took 2.5 hours for MSVD, and 7.5 hours for MSR-VTT.
+I select a checkpoint which achieves the best CIDEr score on the validation set, and report the test scores of it. All experiments are run 5 times and averaged.
 
 * MSVD
 
@@ -78,13 +78,12 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | :---: | :---: | :---: | :---: | :---: | :---: |
   | SA-LSTM[1] | GoogLeNet[2], 3D conv. (HOG+HOF+MBH) | 41.92 | 29.6 | 51.67 | - |
   | SA-LSTM[3] | InceptionV4[4] | 45.3 | 31.9 | **76.2** | 64.2 |
-  | Ours | InceptionV4 | **48.00** | **32.51** | 73.86 | **68.47** |
   |  |  |  |  |
-  | Ours - Trial #1 | InceptionV4 | 47.49 | 32.44 | 74.40 | 68.80 |
-  | Ours - Trial #2 | InceptionV4 | 49.49 | 32.64 | 74.29 | 68.85 |
-  | Ours - Trial #3 | InceptionV4 | 46.83 | 32.37 | 73.04 | 67.63 |
-  | Ours - Trial #4 | InceptionV4 | 47.73 | 32.31 | 72.38 | 68.50 |
-  | Ours - Trial #5 | InceptionV4 | 48.48 | 32.79 | 75.19 | 68.56 |
+  | Ours | VGG19 | - | - | - | - |
+  | Ours | ResNet-50 | - | - | - | - |
+  | Ours | ResNet-101 | - | - | - | - |
+  | Ours | ResNet-152 | - | - | - | - |
+  | Ours | Inception-v4 | - | - | - | - |
 
 
 * MSR-VTT
@@ -94,11 +93,11 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | SA-LSTM[3] | InceptionV4 | 36.3 | 25.5 | 39.9 | **58.3** |
   | Ours | InceptionV4 | **37.29** | **26.00** | **42.6** | 58.13 |
   |  |  |  |  |
-  | Ours - Trial #1 | InceptionV4 | 37.80 | 26.23 | 42.85 | 58.34 |
-  | Ours - Trial #2 | InceptionV4 | 36.76 | 25.79 | 42.25 | 58.08 |
-  | Ours - Trial #3 | InceptionV4 | 37.08 | 25.90 | 41.75 | 57.77 |
-  | Ours - Trial #4 | InceptionV4 | 37.71 | 26.02 | 43.12 | 58.43 |
-  | Ours - Trial #5 | InceptionV4 | 37.12 | 26.06 | 43.03 | 58.03 |
+  | Ours | VGG19 | - | - | - | - |
+  | Ours | ResNet-50 | - | - | - | - |
+  | Ours | ResNet-101 | - | - | - | - |
+  | Ours | ResNet-152 | - | - | - | - |
+  | Ours | Inception-v4 | - | - | - | - |
 
 
 # References
