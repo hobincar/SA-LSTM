@@ -77,27 +77,38 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Model | Features | BLEU4 | METEOR | CIDEr | ROUGE_L |
   | :---: | :---: | :---: | :---: | :---: | :---: |
   | SA-LSTM[1] | GoogLeNet[2], 3D conv. (HOG+HOF+MBH) | 41.92 | 29.6 | 51.67 | - |
-  | SA-LSTM[3] | InceptionV4[4] | 45.3 | 31.9 | **76.2** | 64.2 |
+  | SA-LSTM[3] | Inception-v4[4] | 45.3 | 31.9 | **76.2** | 64.2 |
   |  |  |  |  |
-  | Ours | VGG19 | - | - | - | - |
-  | Ours | ResNet-50 | - | - | - | - |
-  | Ours | ResNet-101 | - | - | - | - |
-  | Ours | ResNet-152 | - | - | - | - |
-  | Ours | Inception-v4 | - | - | - | - |
+  | Ours | VGG19[5] | - | - | - | - |
+  | Ours | ResNet-50[6] | - | - | - | - |
+  | Ours | ResNet-101[6] | - | - | - | - |
+  | Ours | ResNet-152[6] | - | - | - | - |
+  | Ours | Inception-v4[4] | - | - | - | - |
+  | Ours | SqueezeNet[7] | - | - | - | - |
+  | Ours | DenseNet[8] | - | - | - | - |
+  | Ours | ShuffleNet[9] | - | - | - | - |
+  | Ours | C3D (Sports1M)[10] | - | - | - | - |
+  | Ours | R2.5D (Kinetics)[11] | - | - | - | - |
+  | Ours | R2.5D (Sports1M + Kinetics)[11] | - | - | - | - |
 
 
 * MSR-VTT
 
   | Model | Features | BLEU4 | METEOR | CIDEr | ROUGE_L |
   | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM[3] | InceptionV4 | 36.3 | 25.5 | 39.9 | **58.3** |
-  | Ours | InceptionV4 | **37.29** | **26.00** | **42.6** | 58.13 |
+  | SA-LSTM[3] | Inception-v4 | 36.3 | 25.5 | 39.9 | **58.3** |
   |  |  |  |  |
-  | Ours | VGG19 | - | - | - | - |
-  | Ours | ResNet-50 | - | - | - | - |
-  | Ours | ResNet-101 | - | - | - | - |
-  | Ours | ResNet-152 | - | - | - | - |
-  | Ours | Inception-v4 | - | - | - | - |
+  | Ours | VGG19[5] | - | - | - | - |
+  | Ours | ResNet-50[6] | - | - | - | - |
+  | Ours | ResNet-101[6] | - | - | - | - |
+  | Ours | ResNet-152[6] | - | - | - | - |
+  | Ours | Inception-v4[4] | - | - | - | - |
+  | Ours | SqueezeNet[7] | - | - | - | - |
+  | Ours | DenseNet[8] | - | - | - | - |
+  | Ours | ShuffleNet[9] | - | - | - | - |
+  | Ours | C3D (Sports1M)[10] | - | - | - | - |
+  | Ours | R2.5D (Kinetics)[11] | - | - | - | - |
+  | Ours | R2.5D (Sports1M + Kinetics)[11] | - | - | - | - |
 
 
 # References
@@ -109,3 +120,17 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 [3] Wang, Bairui, et al. "Reconstruction Network for Video Captioning." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.
 
 [4] Szegedy, Christian, et al. "Inception-v4, inception-resnet and the impact of residual connections on learning." AAAI. Vol. 4. 2017.
+
+[5] Simonyan, Karen, and Andrew Zisserman. "Very deep convolutional networks for large-scale image recognition." arXiv preprint arXiv:1409.1556 (2014).
+
+[6] He, Kaiming, et al. "Deep residual learning for image recognition." Proceedings of the IEEE conference on computer vision and pattern recognition. 2016.
+
+[7] Iandola, Forrest N., et al. "SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and< 0.5 MB model size." arXiv preprint arXiv:1602.07360 (2016).
+
+[8] Huang, Gao, et al. "Densely connected convolutional networks." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+
+[9] Zhang, Xiangyu, et al. "Shufflenet: An extremely efficient convolutional neural network for mobile devices." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.
+
+[10] Tran, Du, et al. "Learning spatiotemporal features with 3d convolutional networks." Proceedings of the IEEE international conference on computer vision. 2015.
+
+[11] Tran, Du, et al. "A closer look at spatiotemporal convolutions for action recognition." Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. 2018.
