@@ -74,41 +74,43 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 
 * MSVD
 
-  | Model | Features | BLEU4 | METEOR | CIDEr | ROUGE_L |
-  | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM[1] | GoogLeNet[2], 3D conv. (HOG+HOF+MBH) | 41.92 | 29.6 | 51.67 | - |
-  | SA-LSTM[3] | Inception-v4[4] | 45.3 | 31.9 | **76.2** | 64.2 |
-  |  |  |  |  |
-  | Ours | VGG19[5] | - | - | - | - |
-  | Ours | ResNet-50[6] | - | - | - | - |
-  | Ours | ResNet-101[6] | - | - | - | - |
-  | Ours | ResNet-152[6] | - | - | - | - |
-  | Ours | Inception-v4[4] | - | - | - | - |
-  | Ours | SqueezeNet[7] | - | - | - | - |
-  | Ours | DenseNet[8] | - | - | - | - |
-  | Ours | ShuffleNet[9] | - | - | - | - |
-  | Ours | C3D (Sports1M)[10] | - | - | - | - |
-  | Ours | R2.5D (Kinetics)[11] | - | - | - | - |
-  | Ours | R2.5D (Sports1M + Kinetics)[11] | - | - | - | - |
+  | Model | Features | Trained on | BLEU4 | METEOR | CIDEr | ROUGE_L |
+  | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+  | SA-LSTM[1] | GoogLeNet[2], 3D conv. (HOG+HOF+MBH) | | 41.92 | 29.6 | 51.67 | - |
+  | SA-LSTM[3] | Inception-v4[4] | ImageNet | 45.3 | 31.9 | **76.2** | 64.2 |
+  |  |  |  |  |  |
+  | Ours | VGG19 [5] | ImageNet | - | - | - | - |
+  | Ours | ResNet-50 [6] | ImageNet | - | - | - | - |
+  | Ours | ResNet-101 [6] | ImageNet | - | - | - | - |
+  | Ours | ResNet-152 [6] | ImageNet | - | - | - | - |
+  | Ours | Inception-v4 [4] | ImageNet | - | - | - | - |
+  | Ours | SqueezeNet [7] | ImageNet | - | - | - | - |
+  | Ours | DenseNet [8] | ImageNet | - | - | - | - |
+  | Ours | ShuffleNet [9] | ImageNet | - | - | - | - |
+  | Ours | C3D [10] | Sports1M | - | - | - | - |
+  | Ours | Res3D (C3D v1.1) [11] | Sports1M | - | - | - | - |
+  | Ours | R2.5D [12] | Kinetics | - | - | - | - |
+  | Ours | R2.5D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
 
 
 * MSR-VTT
 
-  | Model | Features | BLEU4 | METEOR | CIDEr | ROUGE_L |
-  | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM[3] | Inception-v4 | 36.3 | 25.5 | 39.9 | **58.3** |
-  |  |  |  |  |
-  | Ours | VGG19[5] | - | - | - | - |
-  | Ours | ResNet-50[6] | - | - | - | - |
-  | Ours | ResNet-101[6] | - | - | - | - |
-  | Ours | ResNet-152[6] | - | - | - | - |
-  | Ours | Inception-v4[4] | - | - | - | - |
-  | Ours | SqueezeNet[7] | - | - | - | - |
-  | Ours | DenseNet[8] | - | - | - | - |
-  | Ours | ShuffleNet[9] | - | - | - | - |
-  | Ours | C3D (Sports1M)[10] | - | - | - | - |
-  | Ours | R2.5D (Kinetics)[11] | - | - | - | - |
-  | Ours | R2.5D (Sports1M + Kinetics)[11] | - | - | - | - |
+  | Model | Features | Trained on | BLEU4 | METEOR | CIDEr | ROUGE_L |
+  | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+  | SA-LSTM[3] | Inception-v4 | ImageNet | 36.3 | 25.5 | 39.9 | **58.3** |
+  |  |  |  |  |  |
+  | Ours | VGG19 [5] | ImageNet | - | - | - | - |
+  | Ours | ResNet-50 [6] | ImageNet | - | - | - | - |
+  | Ours | ResNet-101 [6] | ImageNet | - | - | - | - |
+  | Ours | ResNet-152 [6] | ImageNet | - | - | - | - |
+  | Ours | Inception-v4 [4] | ImageNet | - | - | - | - |
+  | Ours | SqueezeNet [7] | ImageNet | - | - | - | - |
+  | Ours | DenseNet [8] | ImageNet | - | - | - | - |
+  | Ours | ShuffleNet [9] | ImageNet | - | - | - | - |
+  | Ours | C3D [10] | Sports1M | - | - | - | - |
+  | Ours | Res3D (C3D v1.1) [11] | Sports1M | - | - | - | - |
+  | Ours | R2.5D [12] | Kinetics | - | - | - | - |
+  | Ours | R2.5D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
 
 
 # References
@@ -133,4 +135,6 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 
 [10] Tran, Du, et al. "Learning spatiotemporal features with 3d convolutional networks." Proceedings of the IEEE international conference on computer vision. 2015.
 
-[11] Tran, Du, et al. "A closer look at spatiotemporal convolutions for action recognition." Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. 2018.
+[11] Tran, Du, et al. "Convnet architecture search for spatiotemporal feature learning." arXiv preprint arXiv:1708.05038 (2017).
+
+[12] Tran, Du, et al. "A closer look at spatiotemporal convolutions for action recognition." Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. 2018.
