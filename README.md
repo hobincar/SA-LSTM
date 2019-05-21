@@ -80,16 +80,12 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | SA-LSTM[3] | Inception-v4[4] | ImageNet | 45.3 | 31.9 | **76.2** | 64.2 |
   |  |  |  |  |  |
   | Ours | VGG19 [5] | ImageNet | - | - | - | - |
-  | Ours | ResNet-50 [6] | ImageNet | - | - | - | - |
-  | Ours | ResNet-101 [6] | ImageNet | - | - | - | - |
   | Ours | ResNet-152 [6] | ImageNet | - | - | - | - |
   | Ours | Inception-v4 [4] | ImageNet | - | - | - | - |
-  | Ours | SqueezeNet [7] | ImageNet | - | - | - | - |
   | Ours | DenseNet [8] | ImageNet | - | - | - | - |
   | Ours | ShuffleNet [9] | ImageNet | - | - | - | - |
   | Ours | C3D [10] | Sports1M | - | - | - | - |
   | Ours | Res3D [11] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [12] | Kinetics | - | - | - | - |
   | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
 
 
@@ -100,16 +96,12 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | SA-LSTM[3] | Inception-v4 | ImageNet | 36.3 | 25.5 | 39.9 | **58.3** |
   |  |  |  |  |  |
   | Ours | VGG19 [5] | ImageNet | - | - | - | - |
-  | Ours | ResNet-50 [6] | ImageNet | - | - | - | - |
-  | Ours | ResNet-101 [6] | ImageNet | - | - | - | - |
   | Ours | ResNet-152 [6] | ImageNet | - | - | - | - |
   | Ours | Inception-v4 [4] | ImageNet | - | - | - | - |
-  | Ours | SqueezeNet [7] | ImageNet | - | - | - | - |
   | Ours | DenseNet [8] | ImageNet | - | - | - | - |
   | Ours | ShuffleNet [9] | ImageNet | - | - | - | - |
   | Ours | C3D [10] | Sports1M | - | - | - | - |
   | Ours | Res3D [11] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [12] | Kinetics | - | - | - | - |
   | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
 
 
