@@ -88,9 +88,9 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | DenseNet [8] | ImageNet | - | - | - | - |
   | Ours | ShuffleNet [9] | ImageNet | - | - | - | - |
   | Ours | C3D [10] | Sports1M | - | - | - | - |
-  | Ours | Res3D (C3D v1.1) [11] | Sports1M | - | - | - | - |
-  | Ours | R2.5D [12] | Kinetics | - | - | - | - |
-  | Ours | R2.5D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
+  | Ours | Res3D [11] | Sports1M | - | - | - | - |
+  | Ours | R(2+1)D [12] | Kinetics | - | - | - | - |
+  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
 
 
 * MSR-VTT
@@ -108,9 +108,9 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | DenseNet [8] | ImageNet | - | - | - | - |
   | Ours | ShuffleNet [9] | ImageNet | - | - | - | - |
   | Ours | C3D [10] | Sports1M | - | - | - | - |
-  | Ours | Res3D (C3D v1.1) [11] | Sports1M | - | - | - | - |
-  | Ours | R2.5D [12] | Kinetics | - | - | - | - |
-  | Ours | R2.5D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
+  | Ours | Res3D [11] | Sports1M | - | - | - | - |
+  | Ours | R(2+1)D [12] | Kinetics | - | - | - | - |
+  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | - | - | - | - |
 
 
 # References
