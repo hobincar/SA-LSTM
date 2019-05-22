@@ -35,7 +35,14 @@ $ source .env/bin/activate
 
 ## Step 2. Prepare Data
 
-1. Download feature vectors for each dataset ([MSVD](https://github.com/hobincar/MSVD), [MSR-VTT](https://github.com/hobincar/MSR-VTT)), and locate them at `~/<dataset>/features/<network>_<phase>.hdf5`. For example, InceptionV4 feature vectors for MSVD train dataset will be located at `~/data/MSVD/features/InceptionV4_train.hdf5`.
+1. Extract features from network you want to use, and locate them at `<PROJECT ROOT>/<DATASET>/features/<DATASET>_<NETWORK>.hdf5`. I extracted features from [here](https://github.com/hobincar/video-feature-extractor) for VGG19, ResNet-152, Inception-v4, DenseNet, and ShuffleNet, [here](https://github.com/facebook/C3D) for C3D and Res3D, and [here](https://github.com/facebookresearch/VMZ) for R(2+1)D network.
+
+2. Split the dataset along with the official splits after changing `model` of `<DATASET>SplitConfig` in `config.py`, and run following:
+
+   ```
+   (.env) $ python -m splits.MSVD
+   (.env) $ python -m splits.MSR-VTT
+   ```
 
 
 ## Step 3. Prepare Evaluation Codes
@@ -61,7 +68,7 @@ You can change some hyperparameters by modifying `config.py`.
 
 ## Step 5. Inference
 
-1. Set the checkpoint path by changing the value of a property named `ckpt_fpath` of `EvalConfig` in `config.py`.
+1. Set the checkpoint path by changing `ckpt_fpath` of `EvalConfig` in `config.py`.
 2. Run
    ```
    (.env) $ python run.py
@@ -70,7 +77,7 @@ You can change some hyperparameters by modifying `config.py`.
 
 # Performances
 
-I select a checkpoint which achieves the best CIDEr score on the validation set, and report the test scores of it. All experiments are run 5 times and averaged.
+I select a checkpoint which achieves the best CIDEr score on the validation set, and report the test scores of it. All experiments are run 5 times and averaged. For SqueezeNet [7], I met the memory issue because the size of feature vector is 86528.
 
 * MSVD
 
