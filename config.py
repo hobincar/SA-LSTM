@@ -37,8 +37,18 @@ class FeatureConfig:
     models = [ "InceptionV4" ]
     size = 0
     for model in models:
-        if model == "InceptionV4":
+        if 'VGG' in model or 'C3D' in model:
+            size += 4096
+        elif 'ResNet' in model:
+            size += 2048
+        elif 'DenseNet' in model:
+            size += 1920
+        elif 'InceptionV4' in model:
             size += 1536
+        elif 'ShuffleNet' in model:
+            size += 1024
+        elif 'R2.5D' in model:
+            size += 512
         else:
             raise NotImplementedError("Unknown model: {}".format(model))
 
@@ -63,7 +73,7 @@ class MSVDLoaderConfig:
     total_video_feat_fpath_tpl = "data/{}/features/{}.hdf5"
     phase_video_feat_fpath_tpl = "data/{}/features/{}_{}.hdf5"
     frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'ramdom' ]
-    frame_max_len = 240
+    frame_max_len = 300 // 5
     frame_sample_len = 28
 
     num_workers = 4
@@ -84,7 +94,7 @@ class MSRVTTLoaderConfig:
     total_video_feat_fpath_tpl = "data/{}/features/{}.hdf5"
     phase_video_feat_fpath_tpl = "data/{}/features/{}_{}.hdf5"
     frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'ramdom' ]
-    frame_max_len = 240
+    frame_max_len = 300 // 5
     frame_sample_len = 28
 
     num_workers = 4
@@ -113,7 +123,10 @@ class TrainConfig:
 
 
     """ Optimization """
-    epochs = 50
+    epochs = {
+        'MSVD': 50,
+        'MSR-VTT': 30,
+    }[corpus]
     batch_size = 200
     shuffle = True
     optimizer = "AMSGrad"
@@ -123,10 +136,10 @@ class TrainConfig:
         'MSR-VTT': 2e-4,
     }[corpus]
     lr_decay_start_from = 20
-    lr_decay_gamma = 0.9
+    lr_decay_gamma = 0.5
     lr_decay_patience = 5
     weight_decay = 1e-5
-    reg_lambda = 1e-3
+    reg_lambda = 0.
 
     """ Pretrained Model """
     pretrained_decoder_fpath = None
@@ -136,7 +149,8 @@ class TrainConfig:
 
     """ ID """
     exp_id = "SA-LSTM"
-    feat_id = "FEAT {} mcl-{}".format('+'.join(feat.models), loader.max_caption_len)
+    feat_id = "FEAT {} mfl-{} fsl-{} mcl-{} ".format('+'.join(feat.models), loader.frame_max_len, loader.frame_sample_len,
+                                                    loader.max_caption_len)
     embedding_id = "EMB {}".format(vocab.embedding_size)
     decoder_id = "DEC {}-{}-l{}-h{} at-{}".format(
         ["uni", "bi"][decoder.rnn_num_directions-1], decoder.rnn_type,

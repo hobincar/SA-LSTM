@@ -104,12 +104,12 @@ def main():
             """ Validation """
             print("\n[VAL]")
             val_loss = evaluate(model, val_iter, vocab, C.reg_lambda)
-            val_scores, _, _ = score(model, val_iter, vocab)
+            val_scores, _, _ = score(model, val_iter, vocab, beam_width=5, beam_alpha=0.)
             log_val(summary_writer, e, val_loss, val_scores)
 
             if e >= C.save_from and e % C.save_every == 0:
                 print("Saving checkpoint at epoch={} to {}".format(e, ckpt_fpath))
-                save_checkpoint(model, ckpt_fpath, C)
+                save_checkpoint(e, model, ckpt_fpath, C)
 
             if e >= C.lr_decay_start_from:
                 lr_scheduler.step(val_loss)
@@ -120,18 +120,18 @@ def main():
     except KeyboardInterrupt:
         if e >= C.save_from:
             print("Saving checkpoint at epoch={}".format(e))
-            save_checkpoint(model, ckpt_fpath, C)
+            save_checkpoint(e, model, ckpt_fpath, C)
         else:
             print("Do not save checkpoint at epoch={}".format(e))
     finally:
         """ Test with Best Model """
         print("\n\n\n[BEST]")
         best_model = load_checkpoint(model, best_ckpt_fpath)
-        best_scores, _, _ = score(best_model, test_iter, vocab)
+        best_scores, _, _ = score(best_model, test_iter, vocab, beam_width=5, beam_alpha=0.)
         print("scores: {}".format(best_scores))
         for metric in C.metrics:
             summary_writer.add_scalar("BEST SCORE/{}".format(metric), best_scores[metric], best_epoch)
-        save_checkpoint(best_model, C.ckpt_fpath_tpl.format("best"), C)
+        save_checkpoint(e, best_model, C.ckpt_fpath_tpl.format("best"), C)
 
 
 if __name__ == "__main__":

@@ -120,7 +120,7 @@ class CaptionGenerator(nn.Module):
                     topk_cum_prob_list[k].append(beam_output_list[i][vocab_size * bi + oi])
                     next_output_list[i].append(output_list[i][bi] + [ oi ])
             output_list = next_output_list
-    
+
             input_list = [ topk_output.unsqueeze(0) for topk_output in topk_output_list ] # width * ( 1, 100 )
             if self.decoder.rnn_type == "LSTM":
                 hidden_list = (

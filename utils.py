@@ -99,7 +99,7 @@ def evaluate(model, val_iter, vocab, reg_lambda):
     return loss
 
 
-def score(model, data_iter, vocab):
+def score(model, data_iter, vocab, beam_width, beam_alpha):
     def build_score_iter(data_iter):
         score_dataset = {}
         for batch in iter(data_iter):
@@ -145,7 +145,7 @@ def score(model, data_iter, vocab):
     hypos = {}
     hypos_with_vid = {}
     for vids, feats in score_iter:
-        captions = model.describe(feats, beam_width=5, beam_alpha=.9)
+        captions = model.describe(feats, beam_width, beam_alpha)
         captions = [ idxs_to_sentence(caption, vocab.idx2word, vocab.word2idx['<EOS>']) for caption in captions ]
         for vid, caption in zip(vids, captions):
             hypos[vid2idx[vid]] = [ caption ]
@@ -232,12 +232,13 @@ def load_checkpoint(model, ckpt_fpath):
     return model
 
 
-def save_checkpoint(model, ckpt_fpath, config):
+def save_checkpoint(e, model, ckpt_fpath, config):
     ckpt_dpath = os.path.dirname(ckpt_fpath)
     if not os.path.exists(ckpt_dpath):
         os.makedirs(ckpt_dpath)
 
     torch.save({
+        'epoch': e,
         'decoder': model.decoder.state_dict(),
         'config': cls_to_dict(config),
     }, ckpt_fpath)
