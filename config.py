@@ -37,7 +37,9 @@ class FeatureConfig:
     models = [ "InceptionV4" ]
     size = 0
     for model in models:
-        if 'VGG' in model or 'C3D' in model:
+        if 'Res3D_res5b' in model:
+            size += 25088
+        elif 'VGG' in model or 'C3D' in model:
             size += 4096
         elif 'ResNet' in model:
             size += 2048
@@ -47,7 +49,7 @@ class FeatureConfig:
             size += 1536
         elif 'ShuffleNet' in model:
             size += 1024
-        elif 'R2.5D' in model:
+        elif 'R2.5D' in model or 'Res3D_pool5' in model:
             size += 512
         else:
             raise NotImplementedError("Unknown model: {}".format(model))
@@ -149,7 +151,7 @@ class TrainConfig:
 
     """ ID """
     exp_id = "SA-LSTM"
-    feat_id = "FEAT {} mfl-{} fsl-{} mcl-{} ".format('+'.join(feat.models), loader.frame_max_len, loader.frame_sample_len,
+    feat_id = "FEAT {} mfl-{} fsl-{} mcl-{}".format('+'.join(feat.models), loader.frame_max_len, loader.frame_sample_len,
                                                     loader.max_caption_len)
     embedding_id = "EMB {}".format(vocab.embedding_size)
     decoder_id = "DEC {}-{}-l{}-h{} at-{}".format(
