@@ -35,7 +35,14 @@ $ source .env/bin/activate
 
 ## Step 2. Prepare Data
 
-1. Download feature vectors for each dataset ([MSVD](https://github.com/hobincar/MSVD), [MSR-VTT](https://github.com/hobincar/MSR-VTT)), and locate them at `~/<dataset>/features/<network>_<phase>.hdf5`. For example, InceptionV4 feature vectors for MSVD train dataset will be located at `~/data/MSVD/features/InceptionV4_train.hdf5`.
+1. Extract features from network you want to use, and locate them at `<PROJECT ROOT>/<DATASET>/features/<DATASET>_<NETWORK>.hdf5`. I extracted features from [here](https://github.com/hobincar/video-feature-extractor) for VGG19, ResNet-152, Inception-v4, DenseNet, and ShuffleNet, [here](https://github.com/facebook/C3D) for C3D and Res3D, and [here](https://github.com/facebookresearch/VMZ) for R(2+1)D network.
+
+2. Split the dataset along with the official splits after changing `model` of `<DATASET>SplitConfig` in `config.py`, and run following:
+
+   ```
+   (.env) $ python -m splits.MSVD
+   (.env) $ python -m splits.MSR-VTT
+   ```
 
 
 ## Step 3. Prepare Evaluation Codes
@@ -53,7 +60,7 @@ Clone evaluation codes from [the official coco-evaluation repo](https://github.c
 
 Run
    ```
-   (.env) $ CUDA_VISIBLE_DEVICES=0 python train.py
+   (.env) $ python train.py
    ```
 
 You can change some hyperparameters by modifying `config.py`.
@@ -61,44 +68,50 @@ You can change some hyperparameters by modifying `config.py`.
 
 ## Step 5. Inference
 
-1. Set the checkpoint path by changing the value of a property named `ckpt_fpath` of `EvalConfig` in `config.py`.
+1. Set the checkpoint path by changing `ckpt_fpath` of `EvalConfig` in `config.py`.
 2. Run
    ```
-   (.env) $ CUDA_VISIBLE_DEVICES=0 python run.py
+   (.env) $ python run.py
    ```
 
 
 # Performances
 
-I select a checkpoint which achieves the best CIDEr score on the validation set, and report the test scores of it. It took 2.5 hours for MSVD, and 7.5 hours for MSR-VTT.
+I select a checkpoint which achieves the best CIDEr score on the validation set, and report the test scores of it. All experiments are run 5 times and averaged. For SqueezeNet [7], I met a memory issue because the size of feature vector is 86528.
 
 * MSVD
 
-  | Model | Features | BLEU4 | METEOR | CIDEr | ROUGE_L |
-  | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM[1] | GoogLeNet[2], 3D conv. (HOG+HOF+MBH) | 41.92 | 29.6 | 51.67 | - |
-  | SA-LSTM[3] | InceptionV4[4] | 45.3 | 31.9 | **76.2** | 64.2 |
-  | Ours | InceptionV4 | **48.00** | **32.51** | 73.86 | **68.47** |
-  |  |  |  |  |
-  | Ours - Trial #1 | InceptionV4 | 47.49 | 32.44 | 74.40 | 68.80 |
-  | Ours - Trial #2 | InceptionV4 | 49.49 | 32.64 | 74.29 | 68.85 |
-  | Ours - Trial #3 | InceptionV4 | 46.83 | 32.37 | 73.04 | 67.63 |
-  | Ours - Trial #4 | InceptionV4 | 47.73 | 32.31 | 72.38 | 68.50 |
-  | Ours - Trial #5 | InceptionV4 | 48.48 | 32.79 | 75.19 | 68.56 |
+  | Model | Features | Trained on | BLEU4 | METEOR | CIDEr | ROUGE_L |
+  | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+  | SA-LSTM [1] | GoogLeNet [2] & 3D conv. | | 41.92 | 29.6 | 51.67 | - |
+  | SA-LSTM [3] | Inception-v4 [4] | ImageNet | 45.3 | 31.9 | 76.2 | 64.2 |
+  |  |  |  |  |  |
+  | Ours | VGG19 [5] | ImageNet | 46.37	| 68.27 |	31.16 |	67.37 |
+  | Ours | ResNet-152 [6] | ImageNet | **50.84**	| **79.47** |	**33.25** |	**69.81** |
+  | Ours | Inception-v4 [4] | ImageNet | 50.2	| 79.04 |	33.3 |	69.65 |
+  | Ours | DenseNet [8] | ImageNet | - | - | - | - |
+  | Ours | ShuffleNet [9] | ImageNet | 35.04 |	42.9 |	25.9 |	62.62 |
+  | Ours | C3D fc6 [10] | Sports1M | 44.32	| 53.42 |	29.66 |	67.05 |
+  | Ours | C3D fc7 [10] | Sports1M | 45.53 |	59.4 |	30.71 |	67.79 |
+  | Ours | Res3D [11] | Sports1M | - | - | - | - |
+  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | 51.23	| 77.81 |	33.44 |	70.06 |
 
 
 * MSR-VTT
 
-  | Model | Features | BLEU4 | METEOR | CIDEr | ROUGE_L |
-  | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM[3] | InceptionV4 | 36.3 | 25.5 | 39.9 | **58.3** |
-  | Ours | InceptionV4 | **37.29** | **26.00** | **42.6** | 58.13 |
-  |  |  |  |  |
-  | Ours - Trial #1 | InceptionV4 | 37.80 | 26.23 | 42.85 | 58.34 |
-  | Ours - Trial #2 | InceptionV4 | 36.76 | 25.79 | 42.25 | 58.08 |
-  | Ours - Trial #3 | InceptionV4 | 37.08 | 25.90 | 41.75 | 57.77 |
-  | Ours - Trial #4 | InceptionV4 | 37.71 | 26.02 | 43.12 | 58.43 |
-  | Ours - Trial #5 | InceptionV4 | 37.12 | 26.06 | 43.03 | 58.03 |
+  | Model | Features | Trained on | BLEU4 | METEOR | CIDEr | ROUGE_L |
+  | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+  | SA-LSTM [3] | Inception-v4 | ImageNet | 36.3 | 25.5 | 39.9 | 58.3 |
+  |  |  |  |  |  |
+  | Ours | VGG19 [5] | ImageNet | 34.94	| 37.45 |	24.62 |	56.33 |
+  | Ours | ResNet-152 [6] | ImageNet | **36.4** |	**41.32** |	**25.51** |	**57.57** |
+  | Ours | Inception-v4 [4] | ImageNet | 36.24	| 40.89 |	25.25 |	57.31 |
+  | Ours | DenseNet [8] | ImageNet | 36.2 |	40.24 |	25.32 |	57.34 |
+  | Ours | ShuffleNet [9] | ImageNet | 34.04	| 34.11 |	23.89 |	55.78 |
+  | Ours | C3D fc6 [10] | Sports1M | - | - | - | - |
+  | Ours | C3D fc7 [10] | Sports1M | - | - | - | - |
+  | Ours | Res3D [11] | Sports1M | - | - | - | - |
+  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | 36.72 |	41.42 |	33.44 |	57.72 |
 
 
 # References
@@ -110,3 +123,19 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 [3] Wang, Bairui, et al. "Reconstruction Network for Video Captioning." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.
 
 [4] Szegedy, Christian, et al. "Inception-v4, inception-resnet and the impact of residual connections on learning." AAAI. Vol. 4. 2017.
+
+[5] Simonyan, Karen, and Andrew Zisserman. "Very deep convolutional networks for large-scale image recognition." arXiv preprint arXiv:1409.1556 (2014).
+
+[6] He, Kaiming, et al. "Deep residual learning for image recognition." Proceedings of the IEEE conference on computer vision and pattern recognition. 2016.
+
+[7] Iandola, Forrest N., et al. "SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and< 0.5 MB model size." arXiv preprint arXiv:1602.07360 (2016).
+
+[8] Huang, Gao, et al. "Densely connected convolutional networks." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+
+[9] Zhang, Xiangyu, et al. "Shufflenet: An extremely efficient convolutional neural network for mobile devices." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.
+
+[10] Tran, Du, et al. "Learning spatiotemporal features with 3d convolutional networks." Proceedings of the IEEE international conference on computer vision. 2015.
+
+[11] Tran, Du, et al. "Convnet architecture search for spatiotemporal feature learning." arXiv preprint arXiv:1708.05038 (2017).
+
+[12] Tran, Du, et al. "A closer look at spatiotemporal convolutions for action recognition." Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. 2018.
