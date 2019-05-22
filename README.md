@@ -81,37 +81,37 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 
 * MSVD
 
-  | Model | Features | Trained on | BLEU4 | METEOR | CIDEr | ROUGE_L |
+  | Model | Features | Trained on | BLEU4 | CIDEr | METEOR | ROUGE_L |
   | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM [1] | GoogLeNet [2] & 3D conv. | | 41.92 | 29.6 | 51.67 | - |
-  | SA-LSTM [3] | Inception-v4 [4] | ImageNet | 45.3 | 31.9 | 76.2 | 64.2 |
+  | SA-LSTM [1] | GoogLeNet [2] & 3D conv. | | 41.92 | 51.67 | 29.6 | - |
+  | SA-LSTM [3] | Inception-v4 [4] | ImageNet | 45.3 | 76.2 | 31.9 | 64.2 |
   |  |  |  |  |  |
   | Ours | VGG19 [5] | ImageNet | 46.37	| 68.27 |	31.16 |	67.37 |
-  | Ours | ResNet-152 [6] | ImageNet | **50.84**	| **79.47** |	**33.25** |	**69.81** |
+  | Ours | ResNet-152 [6] | ImageNet | 50.84	| **79.47** |	33.25 |	69.81 |
   | Ours | Inception-v4 [4] | ImageNet | 50.2	| 79.04 |	33.3 |	69.65 |
   | Ours | DenseNet [8] | ImageNet | - | - | - | - |
   | Ours | ShuffleNet [9] | ImageNet | 35.04 |	42.9 |	25.9 |	62.62 |
   | Ours | C3D fc6 [10] | Sports1M | 44.32	| 53.42 |	29.66 |	67.05 |
   | Ours | C3D fc7 [10] | Sports1M | 45.53 |	59.4 |	30.71 |	67.79 |
   | Ours | Res3D [11] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | 51.23	| 77.81 |	33.44 |	70.06 |
+  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **51.23**	| 77.81 |	**33.44** |	**70.06** |
 
 
 * MSR-VTT
 
-  | Model | Features | Trained on | BLEU4 | METEOR | CIDEr | ROUGE_L |
+  | Model | Features | Trained on | BLEU4 | CIDEr | METEOR | ROUGE_L |
   | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM [3] | Inception-v4 | ImageNet | 36.3 | 25.5 | 39.9 | 58.3 |
+  | SA-LSTM [3] | Inception-v4 | ImageNet | 36.3 | 39.9 | 25.5 | 58.3 |
   |  |  |  |  |  |
   | Ours | VGG19 [5] | ImageNet | 34.94	| 37.45 |	24.62 |	56.33 |
-  | Ours | ResNet-152 [6] | ImageNet | **36.4** |	**41.32** |	**25.51** |	**57.57** |
+  | Ours | ResNet-152 [6] | ImageNet | 36.4 |	41.32 |	25.51 |	57.57 |
   | Ours | Inception-v4 [4] | ImageNet | 36.24	| 40.89 |	25.25 |	57.31 |
   | Ours | DenseNet [8] | ImageNet | 36.2 |	40.24 |	25.32 |	57.34 |
   | Ours | ShuffleNet [9] | ImageNet | 34.04	| 34.11 |	23.89 |	55.78 |
   | Ours | C3D fc6 [10] | Sports1M | - | - | - | - |
   | Ours | C3D fc7 [10] | Sports1M | - | - | - | - |
   | Ours | Res3D [11] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | 36.72 |	41.42 |	33.44 |	57.72 |
+  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **36.72** |	**41.42** |	**33.44** |	**57.72** |
 
 
 # References
