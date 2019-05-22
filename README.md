@@ -89,11 +89,12 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | VGG19 [5] | ImageNet | 46.37	| 68.27 |	31.16 |	67.37 |
   | Ours | ResNet-152 [6] | ImageNet | 50.84	| **79.47** |	33.25 |	69.81 |
   | Ours | Inception-v4 [4] | ImageNet | 50.2	| 79.04 |	33.3 |	69.65 |
-  | Ours | DenseNet [8] | ImageNet | - | - | - | - |
+  | Ours | DenseNet [8] | ImageNet | 49.1	| 73.28 | 32.6 |	69.23 |
   | Ours | ShuffleNet [9] | ImageNet | 35.04 |	42.9 |	25.9 |	62.62 |
   | Ours | C3D fc6 [10] | Sports1M | 44.32	| 53.42 |	29.66 |	67.05 |
   | Ours | C3D fc7 [10] | Sports1M | 45.53 |	59.4 |	30.71 |	67.79 |
-  | Ours | Res3D [11] | Sports1M | - | - | - | - |
+  | Ours | Res3D res5b [11] | Sports1M | - | - | - | - |
+  | Ours | Res3D pool5 [11] | Sports1M | - | - | - | - |
   | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **51.23**	| 77.81 |	**33.44** |	**70.06** |
 
 
@@ -110,7 +111,8 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | ShuffleNet [9] | ImageNet | 34.04	| 34.11 |	23.89 |	55.78 |
   | Ours | C3D fc6 [10] | Sports1M | - | - | - | - |
   | Ours | C3D fc7 [10] | Sports1M | - | - | - | - |
-  | Ours | Res3D [11] | Sports1M | - | - | - | - |
+  | Ours | Res3D res5b [11] | Sports1M | - | - | - | - |
+  | Ours | Res3D pool5 [11] | Sports1M | - | - | - | - |
   | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **36.72** |	**41.42** |	25.35 |	57.72 |
 
 
