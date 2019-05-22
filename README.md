@@ -101,17 +101,17 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 
   | Model | Features | Trained on | BLEU4 | CIDEr | METEOR | ROUGE_L |
   | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM [3] | Inception-v4 | ImageNet | 36.3 | 39.9 | 25.5 | 58.3 |
+  | SA-LSTM [3] | Inception-v4 | ImageNet | 36.3 | 39.9 | **25.5** | **58.3** |
   |  |  |  |  |  |
   | Ours | VGG19 [5] | ImageNet | 34.94	| 37.45 |	24.62 |	56.33 |
-  | Ours | ResNet-152 [6] | ImageNet | 36.4 |	41.32 |	25.51 |	57.57 |
+  | Ours | ResNet-152 [6] | ImageNet | 36.4 |	41.32 |	**25.51** |	57.57 |
   | Ours | Inception-v4 [4] | ImageNet | 36.24	| 40.89 |	25.25 |	57.31 |
   | Ours | DenseNet [8] | ImageNet | 36.2 |	40.24 |	25.32 |	57.34 |
   | Ours | ShuffleNet [9] | ImageNet | 34.04	| 34.11 |	23.89 |	55.78 |
   | Ours | C3D fc6 [10] | Sports1M | - | - | - | - |
   | Ours | C3D fc7 [10] | Sports1M | - | - | - | - |
   | Ours | Res3D [11] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **36.72** |	**41.42** |	**33.44** |	**57.72** |
+  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **36.72** |	**41.42** |	25.35 |	57.72 |
 
 
 # References
