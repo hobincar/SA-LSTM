@@ -35,7 +35,7 @@ $ source .env/bin/activate
 
 ## Step 2. Prepare Data
 
-1. Extract features from network you want to use, and locate them at `<PROJECT ROOT>/<DATASET>/features/<DATASET>_<NETWORK>.hdf5`. I extracted features from [here](https://github.com/hobincar/video-feature-extractor) for VGG19, ResNet-152, Inception-v4, DenseNet, and ShuffleNet, [here](https://github.com/facebook/C3D) for C3D and Res3D, and [here](https://github.com/facebookresearch/VMZ) for R(2+1)D network.
+1. Extract features from network you want to use, and locate them at `<PROJECT ROOT>/<DATASET>/features/<DATASET>_<NETWORK>.hdf5`. I extracted features from [here](https://github.com/hobincar/video-feature-extractor) for VGG19, ResNet-152, Inception-v4, DenseNet, and ShuffleNet, [here](https://github.com/facebook/C3D) for C3D, and [here](https://github.com/facebookresearch/VMZ) for R(2+1)D network.
 
 2. Split the dataset along with the official splits after changing `model` of `<DATASET>SplitConfig` in `config.py`, and run following:
 
@@ -93,9 +93,7 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | ShuffleNet [9] | ImageNet | 35.04 |	42.9 |	25.9 |	62.62 |
   | Ours | C3D fc6 [10] | Sports1M | 44.32	| 53.42 |	29.66 |	67.05 |
   | Ours | C3D fc7 [10] | Sports1M | 45.53 |	59.4 |	30.71 |	67.79 |
-  | Ours | Res3D res5b [11] | Sports1M | - | - | - | - |
-  | Ours | Res3D pool5 [11] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **51.23**	| 77.81 |	**33.44** |	**70.06** |
+  | Ours | R(2+1)D [11] | Sports1M, finetuned on Kinetics | **51.23**	| 77.81 |	**33.44** |	**70.06** |
 
 
 * MSR-VTT
@@ -111,9 +109,7 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | ShuffleNet [9] | ImageNet | 34.04	| 34.11 |	23.89 |	55.78 |
   | Ours | C3D fc6 [10] | Sports1M | - | - | - | - |
   | Ours | C3D fc7 [10] | Sports1M | - | - | - | - |
-  | Ours | Res3D res5b [11] | Sports1M | - | - | - | - |
-  | Ours | Res3D pool5 [11] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [12] | Sports1M, finetuned on Kinetics | **36.72** |	**41.42** |	25.35 |	57.72 |
+  | Ours | R(2+1)D [11] | Sports1M, finetuned on Kinetics | **36.72** |	**41.42** |	25.35 |	57.72 |
 
 
 # References
@@ -138,6 +134,4 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 
 [10] Tran, Du, et al. "Learning spatiotemporal features with 3d convolutional networks." Proceedings of the IEEE international conference on computer vision. 2015.
 
-[11] Tran, Du, et al. "Convnet architecture search for spatiotemporal feature learning." arXiv preprint arXiv:1708.05038 (2017).
-
-[12] Tran, Du, et al. "A closer look at spatiotemporal convolutions for action recognition." Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. 2018.
+[11] Tran, Du, et al. "A closer look at spatiotemporal convolutions for action recognition." Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. 2018.
