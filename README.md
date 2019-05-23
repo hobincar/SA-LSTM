@@ -4,7 +4,7 @@ This project tries to implement *SA-LSTM* proposed in **[Describing Videos by Ex
 
 
 
-# Environment
+## Environment
 
 * Ubuntu 16.04
 * CUDA 9.0
@@ -12,7 +12,7 @@ This project tries to implement *SA-LSTM* proposed in **[Describing Videos by Ex
 * Nvidia Geforce GTX Titan Xp 12GB
 
 
-# Requirements
+## Requirements
 
 * Java 8
 * Python 2.7.12
@@ -21,9 +21,9 @@ This project tries to implement *SA-LSTM* proposed in **[Describing Videos by Ex
 
 
 
-# How to use
+## How to use
 
-## Step 1. Setup python virtual environment
+### Step 1. Setup python virtual environment
 
 ```
 $ virtualenv .env
@@ -33,7 +33,7 @@ $ source .env/bin/activate
 ```
 
 
-## Step 2. Prepare Data
+### Step 2. Prepare Data
 
 1. Extract features from network you want to use, and locate them at `<PROJECT ROOT>/<DATASET>/features/<DATASET>_<NETWORK>.hdf5`. I extracted features from [here](https://github.com/hobincar/video-feature-extractor) for VGG19, ResNet-152, Inception-v4, DenseNet, and ShuffleNet, [here](https://github.com/facebook/C3D) for C3D, and [here](https://github.com/facebookresearch/VMZ) for R(2+1)D network.
 
@@ -45,7 +45,7 @@ $ source .env/bin/activate
    ```
 
 
-## Step 3. Prepare Evaluation Codes
+### Step 3. Prepare Evaluation Codes
 
 Clone evaluation codes from [the official coco-evaluation repo](https://github.com/tylin/coco-caption).
 
@@ -56,7 +56,7 @@ Clone evaluation codes from [the official coco-evaluation repo](https://github.c
    ```
 
 
-## Step 4. Train
+### Step 4. Train
 
 Run
    ```
@@ -66,7 +66,7 @@ Run
 You can change some hyperparameters by modifying `config.py`.
 
 
-## Step 5. Inference
+### Step 5. Inference
 
 1. Set the checkpoint path by changing `ckpt_fpath` of `EvalConfig` in `config.py`.
 2. Run
@@ -75,7 +75,7 @@ You can change some hyperparameters by modifying `config.py`.
    ```
 
 
-# Performances
+## Results
 
 I select a checkpoint which achieves the best CIDEr score on the validation set, and report the test scores of it. All experiments are run 5 times and averaged. For SqueezeNet [7], I met a memory issue because the size of feature vector is 86528.
 
@@ -112,7 +112,7 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | R(2+1)D [11] | Sports1M, finetuned on Kinetics | **36.72** |	**41.42** |	25.35 |	57.72 |
 
 
-# References
+## References
 
 [1] Yao, Li, et al. "Describing videos by exploiting temporal structure." Proceedings of the IEEE international conference on computer vision. 2015.
 
