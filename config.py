@@ -74,7 +74,7 @@ class MSVDLoaderConfig:
 
     total_video_feat_fpath_tpl = "data/{}/features/{}.hdf5"
     phase_video_feat_fpath_tpl = "data/{}/features/{}_{}.hdf5"
-    frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'ramdom' ]
+    frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'random' ]
     frame_max_len = 300 // 5
     frame_sample_len = 28
 
@@ -95,7 +95,7 @@ class MSRVTTLoaderConfig:
 
     total_video_feat_fpath_tpl = "data/{}/features/{}.hdf5"
     phase_video_feat_fpath_tpl = "data/{}/features/{}_{}.hdf5"
-    frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'ramdom' ]
+    frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'random' ]
     frame_max_len = 300 // 5
     frame_sample_len = 28
 
