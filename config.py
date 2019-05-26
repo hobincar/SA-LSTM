@@ -37,19 +37,19 @@ class FeatureConfig:
     models = [ "InceptionV4" ]
     size = 0
     for model in models:
-        if 'Res3D_res5b' in model:
-            size += 25088
+        if 'AlexNet' in model:
+            size += 9216
         elif 'VGG' in model or 'C3D' in model:
             size += 4096
-        elif 'ResNet' in model:
+        elif 'ResNet' in model or 'ResNext' in model or 'InceptionV3' in model:
             size += 2048
         elif 'DenseNet' in model:
             size += 1920
         elif 'InceptionV4' in model:
             size += 1536
-        elif 'ShuffleNet' in model:
+        elif 'ShuffleNet' in model or 'GoogleNet' in model:
             size += 1024
-        elif 'R2.5D' in model or 'Res3D_pool5' in model:
+        elif 'R2.5D' in model:
             size += 512
         else:
             raise NotImplementedError("Unknown model: {}".format(model))
