@@ -34,7 +34,7 @@ class MSRVTTSplitConfig:
 
 
 class FeatureConfig:
-    models = [ "InceptionV4" ]
+    models = [ "MSVD_ResNet152" ]
     size = 0
     for model in models:
         if 'AlexNet' in model:
