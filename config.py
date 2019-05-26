@@ -3,7 +3,7 @@ import time
 
 
 class MSVDSplitConfig:
-    model = "InceptionV4"
+    model = "MSVD_ResNet152"
 
     video_fpath = "data/MSVD/features/{}.hdf5".format(model)
     caption_fpath = "data/MSVD/metadata/MSR Video Description Corpus.csv"
@@ -18,7 +18,7 @@ class MSVDSplitConfig:
 
 
 class MSRVTTSplitConfig:
-    model = "InceptionV4"
+    model = "MSR-VTT-v2016_ResNet152"
 
     video_fpath = "data/MSR-VTT/features/{}.hdf5".format(model)
     train_val_caption_fpath = "data/MSR-VTT/metadata/train_val_videodatainfo.json"
