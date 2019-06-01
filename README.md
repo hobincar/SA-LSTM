@@ -89,7 +89,7 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | AlexNet [12] | ImageNet | 36.3 |	34.9 |	26.7 |	63.4 |
   | Ours | GoogleNet [13] | ImageNet | 36.0 |	38.8 |	25.0 |	57.1 |
   | Ours | VGG19 [5] | ImageNet | 46.4	| 68.3 |	31.2 |	67.4 |
-  | Ours | ResNet-152 [6] | ImageNet | 50.8	| **79.5** |	33.3 |	69.8 |
+  | Ours | ResNet-152 [6] | ImageNet | 50.8	| 79.5 |	33.3 |	69.8 |
   | Ours | ResNext-101 [14] | ImageNet | 50.0 |	77.2 |	33.0 |	63.4 |
   | Ours | Inception-v4 [4] | ImageNet | 50.2	| 79.0 |	33.3 |	69.7 |
   | Ours | DenseNet [8] | ImageNet | 49.4 |	75.6 |	32.7 |	69.2 |
@@ -97,6 +97,7 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | C3D fc6 [10] | Sports1M | 44.3	| 53.4 |	29.7 |	67.1 |
   | Ours | C3D fc7 [10] | Sports1M | 45.5 |	59.4 |	30.7 |	67.8 |
   | Ours | R(2+1)D [11] | Sports1M, finetuned on Kinetics | **51.2**	| 77.8 |	**33.4** |	**70.1** |
+  | Ours | 3D-ResNext-101 [15] | Kinetics | 49.2	| **82.3** |	33.1 |	70.0 |
 
 
 * MSR-VTT
@@ -116,6 +117,7 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | C3D fc6 [10] | Sports1M | - | - | - | - |
   | Ours | C3D fc7 [10] | Sports1M | - | - | - | - |
   | Ours | R(2+1)D [11] | Sports1M, finetuned on Kinetics | **36.7** |	41.4 |	25.4 |	57.7 |
+  | Ours | 3D-ResNext-101 [15] | Kinetics | -	| - |	- |	- |
 
 
 ## References
@@ -147,3 +149,5 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 [13] Szegedy, Christian, et al. "Going deeper with convolutions." Proceedings of the IEEE conference on computer vision and pattern recognition. 2015.
 
 [14] Xie, Saining, et al. "Aggregated residual transformations for deep neural networks." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+
+[15] Hara, Kensho, Hirokatsu Kataoka, and Yutaka Satoh. "Can spatiotemporal 3d cnns retrace the history of 2d cnns and imagenet?." Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. 2018.
