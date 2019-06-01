@@ -110,13 +110,13 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
   | Ours | GoogleNet [13] | ImageNet | 26.5 |	26.0 |	22.4 |	58.4 |
   | Ours | VGG19 [5] | ImageNet | 34.9	| 37.4 |	24.6 |	56.3 |
   | Ours | ResNet-152 [6] | ImageNet | 36.4 |	41.3 |	25.5 |	57.6 |
-  | Ours | ResNext-101 [14] | ImageNet | 36.5 |	**41.9** |	**25.7** |	**57.8** |
+  | Ours | ResNext-101 [14] | ImageNet | 36.5 |	**41.9** |	**25.7** |	57.8 |
   | Ours | Inception-v4 [4] | ImageNet | 36.2	| 40.9 |	25.3 |	57.3 |
-  | Ours | DenseNet [8] | ImageNet | 36.8 |	40.9 |	25.6 |	57.9 |
+  | Ours | DenseNet [8] | ImageNet | **36.8** |	40.9 |	25.6 |	**57.9** |
   | Ours | ShuffleNet [9] | ImageNet | 34.0	| 34.1 |	23.9 |	55.8 |
   | Ours | C3D fc6 [10] | Sports1M | - | - | - | - |
   | Ours | C3D fc7 [10] | Sports1M | - | - | - | - |
-  | Ours | R(2+1)D [11] | Sports1M, finetuned on Kinetics | **36.7** |	41.4 |	25.4 |	57.7 |
+  | Ours | R(2+1)D [11] | Sports1M, finetuned on Kinetics | 36.7 |	41.4 |	25.4 |	57.7 |
   | Ours | 3D-ResNext-101 [15] | Kinetics | -	| - |	- |	- |
 
 
