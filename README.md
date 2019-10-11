@@ -36,7 +36,10 @@ $ source .env/bin/activate
 ### Step 2. Prepare Data
 
 1. Extract features from network you want to use, and locate them at `<PROJECT ROOT>/<DATASET>/features/<DATASET>_<NETWORK>.hdf5`. I extracted features of VGG19, ResNet-152, and Inception-v4 from [here](https://github.com/hobincar/pytorch-video-feature-extractor), R(2+1)D from [here](https://github.com/facebookresearch/VMZ), and 3D-ResNext from [here](https://github.com/kenshohara/video-classification-3d-cnn-pytorch). <br/>
-   [[MSVD InceptionV4 Feature]](https://drive.google.com/open?id=18aZ8AdFeJ8h2wPR3YMnZNHnw7ebtfGih) [[MSR-VTT InceptionV4 Feature]](https://drive.google.com/open?id=1pFh4u-KwSnCFRl6UJgg7yeaLo2GbxkVT)
+   [[MSVD InceptionV4 Feature]](https://drive.google.com/open?id=18aZ8AdFeJ8h2wPR3YMnZNHnw7ebtfGih)
+   [[MSVD ResNet Feature]](https://drive.google.com/open?id=1efQ2aBRhDuLz2SVZjVcMBwZq5f_ZKtLI)
+   [[MSVD 3D-ResNext Feature]](https://drive.google.com/open?id=1XvJf-5yyOv-DicNqp-Z9nM9EHwZ3KB5E)<br/>
+   [[MSR-VTT InceptionV4 Feature]](https://drive.google.com/open?id=1pFh4u-KwSnCFRl6UJgg7yeaLo2GbxkVT)
 
 2. After changing `model` of `<DATASET>SplitConfig` in `config.py` as above, split the dataset along with the official splits using following:
 
