@@ -5,6 +5,7 @@ import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from tqdm import tqdm
 
 import losses
 from pycocoevalcap.bleu.bleu import Bleu
@@ -46,25 +47,24 @@ def train(e, model, optimizer, train_iter, vocab, teacher_forcing_ratio, reg_lam
 
     loss_checker = LossChecker(3)
     PAD_idx = vocab.word2idx['<PAD>']
-    for b, batch in enumerate(train_iter, 1):
+    t = tqdm(train_iter)
+    for batch in t:
         _, feats, captions = parse_batch(batch)
         optimizer.zero_grad()
         output = model(feats, captions, teacher_forcing_ratio)
         cross_entropy_loss = F.nll_loss(output[1:].view(-1, vocab.n_vocabs),
                                         captions[1:].contiguous().view(-1),
                                         ignore_index=PAD_idx)
-        entropy_loss = reg_lambda * losses.entropy_loss(output[1:], ignore_mask=(captions[1:] == PAD_idx))
-        loss = cross_entropy_loss + entropy_loss
+        entropy_loss = losses.entropy_loss(output[1:], ignore_mask=(captions[1:] == PAD_idx))
+        loss = cross_entropy_loss + reg_lambda * entropy_loss
         loss.backward()
         if gradient_clip is not None:
             torch.nn.utils.clip_grad_norm_(model.parameters(), gradient_clip)
         optimizer.step()
 
         loss_checker.update(loss.item(), cross_entropy_loss.item(), entropy_loss.item())
-        if len(train_iter) < 10 or b % (len(train_iter) // 10) == 0:
-            inter_loss, inter_cross_entropy_loss, inter_entropy_loss = loss_checker.mean(last=10)
-            print("\t[{:d}/{:d}] loss: {:.4f} (CE {:.4f} + E {:.4f})".format(
-                b, len(train_iter), inter_loss, inter_cross_entropy_loss, inter_entropy_loss))
+        t.set_description("[Epoch #{0}] loss: {2:.3f} = (CE: {3:.3f}) + (Ent: {1} * {4:.3f})".format(
+            e, reg_lambda, *loss_checker.mean(last=10)))
 
     total_loss, cross_entropy_loss, entropy_loss = loss_checker.mean()
     loss = {
@@ -86,8 +86,8 @@ def test(model, val_iter, vocab, reg_lambda):
         cross_entropy_loss = F.nll_loss(output[1:].view(-1, vocab.n_vocabs),
                           captions[1:].contiguous().view(-1),
                           ignore_index=PAD_idx)
-        entropy_loss = reg_lambda * losses.entropy_loss(output[1:], ignore_mask=(captions[1:] == PAD_idx))
-        loss = cross_entropy_loss + entropy_loss
+        entropy_loss = losses.entropy_loss(output[1:], ignore_mask=(captions[1:] == PAD_idx))
+        loss = cross_entropy_loss + reg_lambda * entropy_loss
         loss_checker.update(loss.item(), cross_entropy_loss.item(), entropy_loss.item())
 
     total_loss, cross_entropy_loss, entropy_loss = loss_checker.mean()
