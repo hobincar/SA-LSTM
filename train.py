@@ -4,7 +4,7 @@ from tensorboardX import SummaryWriter
 import torch
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-from utils import train, evaluate, score, get_lr, save_checkpoint, load_checkpoint
+from utils import evaluate, get_lr, load_checkpoint, save_checkpoint, test, train
 from config import TrainConfig as C
 from loader.MSVD import MSVD
 from loader.MSRVTT import MSRVTT
@@ -86,52 +86,45 @@ def main():
     lr_scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=C.lr_decay_gamma,
                                      patience=C.lr_decay_patience, verbose=True)
 
-    try:
-        best_val_CIDEr = 0.
-        best_epoch = None
-        best_ckpt_fpath = None
-        for e in range(1, C.epochs + 1):
-            print("\n\n\nEpoch {:d}".format(e))
+    best_val_CIDEr = 0.
+    best_epoch = None
+    best_ckpt_fpath = None
+    for e in range(1, C.epochs + 1):
+        print("\n\n\nEpoch {:d}".format(e))
 
-            ckpt_fpath = C.ckpt_fpath_tpl.format(e)
+        ckpt_fpath = C.ckpt_fpath_tpl.format(e)
 
-            """ Train """
-            print("\n[TRAIN]")
-            train_loss = train(e, model, optimizer, train_iter, vocab, C.decoder.rnn_teacher_forcing_ratio,
-                               C.reg_lambda, C.gradient_clip)
-            log_train(summary_writer, e, train_loss, get_lr(optimizer))
+        """ Train """
+        print("\n[TRAIN]")
+        train_loss = train(e, model, optimizer, train_iter, vocab, C.decoder.rnn_teacher_forcing_ratio,
+                           C.reg_lambda, C.gradient_clip)
+        log_train(summary_writer, e, train_loss, get_lr(optimizer))
 
-            """ Validation """
-            print("\n[VAL]")
-            val_loss = evaluate(model, val_iter, vocab, C.reg_lambda)
-            val_scores, _, _ = score(model, val_iter, vocab, beam_width=5, beam_alpha=0.)
-            log_val(summary_writer, e, val_loss, val_scores)
+        """ Validation """
+        print("\n[VAL]")
+        val_loss = test(model, val_iter, vocab, C.reg_lambda)
+        val_scores = evaluate(val_iter, model, vocab, beam_width=5, beam_alpha=0.)
+        log_val(summary_writer, e, val_loss, val_scores)
 
-            if e >= C.save_from and e % C.save_every == 0:
-                print("Saving checkpoint at epoch={} to {}".format(e, ckpt_fpath))
-                save_checkpoint(e, model, ckpt_fpath, C)
-
-            if e >= C.lr_decay_start_from:
-                lr_scheduler.step(val_loss['total'])
-            if val_scores['CIDEr'] > best_val_CIDEr:
-                best_epoch = e
-                best_val_CIDEr = val_scores['CIDEr']
-                best_ckpt_fpath = ckpt_fpath
-    except KeyboardInterrupt:
-        if e >= C.save_from:
-            print("Saving checkpoint at epoch={}".format(e))
+        if e >= C.save_from and e % C.save_every == 0:
+            print("Saving checkpoint at epoch={} to {}".format(e, ckpt_fpath))
             save_checkpoint(e, model, ckpt_fpath, C)
-        else:
-            print("Do not save checkpoint at epoch={}".format(e))
-    finally:
-        """ Test with Best Model """
-        print("\n\n\n[BEST]")
-        best_model = load_checkpoint(model, best_ckpt_fpath)
-        best_scores, _, _ = score(best_model, test_iter, vocab, beam_width=5, beam_alpha=0.)
-        print("scores: {}".format(best_scores))
-        for metric in C.metrics:
-            summary_writer.add_scalar("BEST SCORE/{}".format(metric), best_scores[metric], best_epoch)
-        save_checkpoint(e, best_model, C.ckpt_fpath_tpl.format("best"), C)
+
+        if e >= C.lr_decay_start_from:
+            lr_scheduler.step(val_loss['total'])
+        if val_scores['CIDEr'] > best_val_CIDEr:
+            best_epoch = e
+            best_val_CIDEr = val_scores['CIDEr']
+            best_ckpt_fpath = ckpt_fpath
+
+    """ Test with Best Model """
+    print("\n\n\n[BEST]")
+    best_model = load_checkpoint(model, best_ckpt_fpath)
+    best_scores = evaluate(test_iter, best_model, vocab, beam_width=5, beam_alpha=0.)
+    print("scores: {}".format(best_scores))
+    for metric in C.metrics:
+        summary_writer.add_scalar("BEST SCORE/{}".format(metric), best_scores[metric], best_epoch)
+    save_checkpoint(e, best_model, C.ckpt_fpath_tpl.format("best"), C)
 
 
 if __name__ == "__main__":
