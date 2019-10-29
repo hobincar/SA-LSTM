@@ -6,7 +6,6 @@ blessings==1.7
 decorator==4.4.0
 enum34==1.1.6
 funcsigs==1.0.2
-futures==3.3.0
 gast==0.2.2
 gpustat==0.6.0
 grpcio==1.24.1

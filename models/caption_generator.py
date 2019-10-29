@@ -45,6 +45,25 @@ class CaptionGenerator(nn.Module):
                                        teacher_forcing_ratio)
         return outputs
 
+    def get_probability(self, feats, captions):
+        batch_size = feats.size(0)
+        vocab_size = self.decoder.output_size
+        PAD_idx = self.vocab.word2idx['<PAD>']
+
+        hidden = self.get_rnn_init_hidden(batch_size, self.decoder.num_layers, self.decoder.num_directions,
+                                          self.decoder.hidden_size)
+        output = Variable(torch.cuda.LongTensor(1, batch_size).fill_(self.vocab.word2idx['<SOS>']))
+        log_probs = 0.
+        for t in range(1, self.max_caption_len + 2):
+            output, hidden, _ = self.decoder(output.view(1, -1), hidden, feats)
+            log_prob = torch.stack([ output[i][c] for i, c in enumerate(captions.data[t]) ])
+            mask = (captions.data[t] != PAD_idx).float()
+            log_prob = log_prob * mask
+            log_probs += log_prob
+
+            output = Variable(captions.data[t]).cuda()
+        return log_probs
+
     def describe(self, feats, beam_width, beam_alpha):
         batch_size = feats.size(0)
         vocab_size = self.decoder.output_size
