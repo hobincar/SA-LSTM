@@ -35,95 +35,67 @@ class LossChecker:
 
 
 def parse_batch(batch):
-    vids, feats, captions, negative_captions = batch
+    vids, feats, captions = batch
     feats = [ feat.cuda() for feat in feats ]
     feats = torch.cat(feats, dim=2)
     captions = captions.long().cuda()
-    negative_captions = negative_captions.long().cuda()
-    return vids, feats, captions, negative_captions
+    return vids, feats, captions
 
 
-def train(e, target_model, reference_model, optimizer, train_iter, vocab, teacher_forcing_ratio, gradient_clip):
-    target_model.train()
-    reference_model.train()
+def train(e, model, optimizer, train_iter, vocab, teacher_forcing_ratio, reg_lambda, gradient_clip):
+    model.train()
 
     loss_checker = LossChecker(3)
+    PAD_idx = vocab.word2idx['<PAD>']
     t = tqdm(train_iter)
     for batch in t:
-        _, feats, pos_captions, neg_captions_list = parse_batch(batch)
-        K = len(neg_captions_list)
+        _, feats, captions = parse_batch(batch)
         optimizer.zero_grad()
-
-        # 1 positive pair
-        target_log_prob = target_model.get_probability(feats, pos_captions)
-        reference_log_prob = reference_model.get_probability(feats, pos_captions)
-        G_pos = target_log_prob - reference_log_prob
-        h_pos = torch.sigmoid(G_pos)
-        J_pos = torch.log(h_pos)
-        J_pos = -J_pos.mean()
-
-        # K negative pairs
-        J_neg = 0.
-        for neg_captions in neg_captions_list:
-            target_log_prob = target_model.get_probability(feats, neg_captions)
-            reference_log_prob = reference_model.get_probability(feats, neg_captions)
-            G_neg = target_log_prob - reference_log_prob
-            h_neg = torch.sigmoid(G_neg)
-            J_neg += torch.log(h_neg)
-        J_neg = -J_neg.mean()
-
-        J = J_pos + J_neg
-        J.backward()
+        output = model(feats, captions, teacher_forcing_ratio)
+        cross_entropy_loss = F.nll_loss(output[1:].view(-1, vocab.n_vocabs),
+                                        captions[1:].contiguous().view(-1),
+                                        ignore_index=PAD_idx)
+        entropy_loss = losses.entropy_loss(output[1:], ignore_mask=(captions[1:] == PAD_idx))
+        loss = cross_entropy_loss + reg_lambda * entropy_loss
+        loss.backward()
         if gradient_clip is not None:
-            torch.nn.utils.clip_grad_norm_(target_model.parameters(), gradient_clip)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), gradient_clip)
         optimizer.step()
 
-        loss_checker.update(J.item(), J_pos.item(), J_neg.item())
-        t.set_description("[Epoch #{0}] loss: {1:.3f} = (P: {2:.3f}) + (N: {3:.3f})".format(e, *loss_checker.mean(last=10)))
+        loss_checker.update(loss.item(), cross_entropy_loss.item(), entropy_loss.item())
+        t.set_description("[Epoch #{0}] loss: {2:.3f} = (CE: {3:.3f}) + (Ent: {1} * {4:.3f})".format(
+            e, reg_lambda, *loss_checker.mean(last=10)))
 
-    J, J_pos, J_neg = loss_checker.mean()
+    total_loss, cross_entropy_loss, entropy_loss = loss_checker.mean()
     loss = {
-        'total': J,
-        'pos': J_pos,
-        'neg': J_neg}
+        'total': total_loss,
+        'cross_entropy': cross_entropy_loss,
+        'entropy': entropy_loss,
+    }
     return loss
 
 
-def test(target_model, reference_model, val_iter, vocab):
-    target_model.eval()
-    reference_model.eval()
+def test(model, val_iter, vocab, reg_lambda):
+    model.eval()
 
     loss_checker = LossChecker(3)
-    for batch in tqdm(val_iter):
-        _, feats, pos_captions, neg_captions_list = parse_batch(batch)
-        K = len(neg_captions_list)
+    PAD_idx = vocab.word2idx['<PAD>']
+    for b, batch in enumerate(val_iter, 1):
+        _, feats, captions = parse_batch(batch)
+        output = model(feats, captions)
+        cross_entropy_loss = F.nll_loss(output[1:].view(-1, vocab.n_vocabs),
+                          captions[1:].contiguous().view(-1),
+                          ignore_index=PAD_idx)
+        entropy_loss = losses.entropy_loss(output[1:], ignore_mask=(captions[1:] == PAD_idx))
+        loss = cross_entropy_loss + reg_lambda * entropy_loss
+        loss_checker.update(loss.item(), cross_entropy_loss.item(), entropy_loss.item())
 
-        # 1 positive pair
-        target_log_prob = target_model.get_probability(feats, pos_captions)
-        reference_log_prob = reference_model.get_probability(feats, pos_captions)
-        G_pos = target_log_prob - reference_log_prob
-        h_pos = torch.sigmoid(G_pos)
-        J_pos = torch.log(h_pos)
-        J_pos = -J_pos.mean()
-
-        # K negative pairs
-        J_neg = 0.
-        for neg_captions in neg_captions_list:
-            target_log_prob = target_model.get_probability(feats, neg_captions)
-            reference_log_prob = reference_model.get_probability(feats, neg_captions)
-            G_neg = target_log_prob - reference_log_prob
-            h_neg = torch.sigmoid(G_neg)
-            J_neg += torch.log(h_neg)
-        J_neg = -J_neg.mean()
-
-        J = J_pos + J_neg
-        loss_checker.update(J.item(), J_pos.item(), J_neg.item())
-
-    J, J_pos, J_neg = loss_checker.mean()
+    total_loss, cross_entropy_loss, entropy_loss = loss_checker.mean()
     loss = {
-        'total': J,
-        'pos': J_pos,
-        'neg': J_neg}
+        'total': total_loss,
+        'cross_entropy': cross_entropy_loss,
+        'entropy': entropy_loss,
+    }
     return loss
 
 
@@ -131,7 +103,7 @@ def get_predicted_captions(data_iter, model, vocab, beam_width=5, beam_alpha=0.)
     def build_onlyonce_iter(data_iter):
         onlyonce_dataset = {}
         for batch in iter(data_iter):
-            vids, feats, _, _ = parse_batch(batch)
+            vids, feats, _ = parse_batch(batch)
             for vid, feat in zip(vids, feats):
                 if vid not in onlyonce_dataset:
                     onlyonce_dataset[vid] = feat
@@ -162,7 +134,7 @@ def get_groundtruth_captions(data_iter, vocab):
     vid2GTs = {}
     EOS_idx = vocab.word2idx['<EOS>']
     for batch in iter(data_iter):
-        vids, _, captions, _ = parse_batch(batch)
+        vids, _, captions = parse_batch(batch)
         captions = captions.transpose(0, 1)
         for vid, caption in zip(vids, captions):
             if vid not in vid2GTs:

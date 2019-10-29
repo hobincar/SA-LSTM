@@ -1,6 +1,6 @@
 from __future__ import print_function, division
+
 from collections import defaultdict
-import random
 
 import h5py
 import numpy as np
@@ -70,15 +70,14 @@ class CustomDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        vid, video_feats, caption, negative_captions = self.data[idx]
+        vid, video_feats, caption = self.data[idx]
 
         if self.transform_frame:
             video_feats = [ self.transform_frame(feat) for feat in video_feats ]
         if self.transform_caption:
             caption = self.transform_caption(caption)
-            negative_captions = [ self.transform_caption(c) for c in negative_captions ]
 
-        return vid, video_feats, caption, negative_captions
+        return vid, video_feats, caption
 
     def load_video_feats(self):
         for model in self.C.feat.models:
@@ -108,24 +107,13 @@ class CustomDataset(Dataset):
         raise NotImplementedError("You should implement this function.")
 
     def build_video_caption_pairs(self):
-        def sample_negative_captions(vid, K=5):
-            negative_captions = []
-            for _ in range(K):
-                negative_vids = self.captions.keys()
-                negative_vids.remove(vid)
-                negative_vid = random.choice(negative_vids)
-                negative_caption = random.choice(self.captions[negative_vid])
-                negative_captions.append(negative_caption)
-            return negative_captions
-
         self.load_video_feats()
         self.load_captions()
 
         for vid in self.video_feats.keys():
             video_feats = self.video_feats[vid]
             for caption in self.captions[vid]:
-                negative_captions = sample_negative_captions(vid, K=5)
-                self.data.append(( vid, video_feats, caption, negative_captions ))
+                self.data.append(( vid, video_feats, caption ))
 
 
 class Corpus(object):
@@ -204,24 +192,21 @@ class Corpus(object):
             transform_caption=self.transform_caption)
          return dataset
 
+
     def collate_fn(self, batch):
-        vids, video_feats, captions, negative_captions = zip(*batch)
+        vids, video_feats, captions = zip(*batch)
         video_feats_list = zip(*video_feats)
 
         video_feats_list = [ torch.stack(video_feats) for video_feats in video_feats_list ]
         captions = torch.stack(captions)
-        negative_captions = torch.stack([ torch.stack(nc) for nc in negative_captions  ])
-        negative_captions = negative_captions.transpose(0, 1)
 
         video_feats_list = [ video_feats.float() for video_feats in video_feats_list ]
         captions = captions.float()
-        negative_captions = negative_captions.float()
 
         """ (batch, seq, feat) -> (seq, batch, feat) """
         captions = captions.transpose(0, 1)
-        negative_captions = negative_captions.transpose(1, 2)
 
-        return vids, video_feats_list, captions, negative_captions
+        return vids, video_feats_list, captions
 
     def build_data_loader(self, dataset):
         data_loader = DataLoader(

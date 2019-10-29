@@ -11,8 +11,8 @@ from models.decoder import Decoder
 from models.caption_generator import CaptionGenerator
 
 
-def run(ckpt_fpath, e):
-    checkpoint = torch.load(ckpt_fpath.format(e))
+def run(ckpt_fpath):
+    checkpoint = torch.load(ckpt_fpath)
 
     """ Load Config """
     config = dict_to_cls(checkpoint['config'])
@@ -65,12 +65,10 @@ def run(ckpt_fpath, e):
     test_scores = score(test_vid2pred, test_vid2GTs)
     print("[TEST] {}".format(test_scores))
 
-    test_save_fpath = os.path.join(C.result_dpath, "{}_{}_{}.csv".format(config.corpus, 'test', e))
+    test_save_fpath = os.path.join(C.result_dpath, "{}_{}.csv".format(config.corpus, 'test'))
     save_result(test_vid2pred, test_vid2GTs, test_save_fpath)
 
 
 if __name__ == "__main__":
-    # for e in range(1, 23):
-    for e in range(23, 39):
-        run(C.ckpt_fpath, e)
+    run(C.ckpt_fpath)
 
