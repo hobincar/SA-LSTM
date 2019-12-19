@@ -31,7 +31,6 @@ class MSRVTTSplitConfig:
     train_metadata_fpath = "data/MSR-VTT/metadata/train.json"
     val_metadata_fpath = "data/MSR-VTT/metadata/val.json"
     test_metadata_fpath = "data/MSR-VTT/metadata/test.json"
-    total_metadata_fpath = "data/MSR-VTT/metadata/total.json"
 
 
 class FeatureConfig:
@@ -57,19 +56,17 @@ class FeatureConfig:
 
 
 class VocabConfig:
-    init_word2idx = { '<PAD>': 0, '<SOS>': 1, '<EOS>': 2 }
+    init_word2idx = { '<PAD>': 0, '<SOS>': 1, '<EOS>': 2, '<UNK>': 3 }
     embedding_size = 468
 
 
 class MSVDLoaderConfig:
-    total_caption_fpath = "data/MSVD/metadata/MSR Video Description Corpus.csv"
     train_caption_fpath = "data/MSVD/metadata/train.csv"
     val_caption_fpath = "data/MSVD/metadata/val.csv"
     test_caption_fpath = "data/MSVD/metadata/test.csv"
     min_count = 1
     max_caption_len = 30
 
-    total_video_feat_fpath_tpl = "data/{}/features/{}.hdf5"
     phase_video_feat_fpath_tpl = "data/{}/features/{}_{}.hdf5"
     frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'random' ]
     frame_max_len = 300 // 5
@@ -79,14 +76,12 @@ class MSVDLoaderConfig:
 
 
 class MSRVTTLoaderConfig:
-    total_caption_fpath = "data/MSR-VTT/metadata/total.json"
     train_caption_fpath = "data/MSR-VTT/metadata/train.json"
     val_caption_fpath = "data/MSR-VTT/metadata/val.json"
     test_caption_fpath = "data/MSR-VTT/metadata/test.json"
     min_count = 1
     max_caption_len = 30
 
-    total_video_feat_fpath_tpl = "data/{}/features/{}.hdf5"
     phase_video_feat_fpath_tpl = "data/{}/features/{}_{}.hdf5"
     frame_sampling_method = 'uniform'; assert frame_sampling_method in [ 'uniform', 'random' ]
     frame_max_len = 300 // 5
