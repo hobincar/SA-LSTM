@@ -104,16 +104,16 @@ I select a checkpoint which achieves the best CIDEr score on the validation set,
 
   | Model | Features | Trained on | BLEU4 | CIDEr | METEOR | ROUGE_L |
   | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-  | SA-LSTM [3] | Inception-v4 | ImageNet | 36.3 | 39.9 | **25.5** | **58.3** |
+  | SA-LSTM [3] | Inception-v4 | ImageNet | 36.3 | 39.9 | 25.5 | 58.3 |
   |  |  |  |  |  |
   | Ours | AlexNet [9] | ImageNet | 31.3 |	29.8 |	23.3 |	54.5 |
   | Ours | GoogleNet [10] | ImageNet | 26.5 |	26.0 |	22.4 |	58.4 |
   | Ours | VGG19 [5] | ImageNet | 34.9	| 37.4 |	24.6 |	56.3 |
   | Ours | ResNet-152 [6] | ImageNet | 36.4 |	41.3 |	25.5 |	57.6 |
-  | Ours | ResNext-101 [11] | ImageNet | 36.5 |	**41.9** |	**25.7** |	57.8 |
+  | Ours | ResNext-101 [11] | ImageNet | 36.5 |	41.9 |	**25.7** |	57.8 |
   | Ours | Inception-v4 [4] | ImageNet | 36.2	| 40.9 |	25.3 |	57.3 |
   | Ours | R(2+1)D [8] | Sports1M, finetuned on Kinetics | 36.7 |	41.4 |	25.4 |	57.7 |
-  | Ours | 3D-ResNext-101 [12] | Kinetics | -	| - |	- |	- |
+  | Ours | 3D-ResNext-101 [12] | Kinetics | **38.1**	| **42.6** |	25.4 |	**58.5** |
 
 
 ## References
