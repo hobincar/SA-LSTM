@@ -12,7 +12,7 @@ gpustat==0.6.0
 grpcio==1.24.1
 h5py==2.10.0
 ipdb==0.12.2
-ipython==5.8.0
+ipython==7.16.3
 ipython-genutils==0.2.0
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
